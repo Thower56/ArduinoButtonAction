@@ -7,8 +7,12 @@ public:
     void allumer();
     void allumer(float p_poucentageIntensite);
     void clignoter(int p_allumer, int p_eteint);
+    int getPourcentageIntensite();
     void eteindre();
 private:
     uint8_t m_pinDEL;
-    float m_poucentageIntensite;
+    int m_tempsAllumer;
+    int m_tempsEteint;
+    int m_dureeActionMS;
+    int m_poucentageIntensite;
 };

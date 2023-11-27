@@ -27,9 +27,23 @@ void Program::loop(){
         if (dernierEtatStableBouton == HIGH && etatBouton == LOW) {
             m_bouton1->tick();
         } 
-        // else if (dernierEtatStableBouton == LOW && etatBouton == HIGH) {
-
-        // }
+        switch (m_del->getPourcentageIntensite())
+        {
+            case 0:
+                m_del->eteindre();
+                break;
+            case 25:
+                m_del->clignoter(750, 250);
+                break;
+            case 50:
+                m_del->clignoter(500, 500);
+                break;
+            case 75:
+                m_del->clignoter(250, 750);
+                break;
+            case 100:
+                m_del->allumer();
+        }
         dernierEtatStableBouton = etatBouton;
     }
 
