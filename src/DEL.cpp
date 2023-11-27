@@ -2,7 +2,9 @@
 
 DEL::DEL(uint8_t p_pinDEL){
     m_pinDEL = p_pinDEL;
-
+    m_etapeCycle = 0;
+    m_dureeActionMS = 0;
+    m_dateDernierDecrementdureeActionUs = 0;
 };
 void DEL::allumer(){
     analogWrite(m_pinDEL, 255);
@@ -20,24 +22,25 @@ int DEL::getPourcentageIntensite(){
 };
 
 void DEL::clignoter(int p_allumer, int p_eteint){
-    while(m_dureeActionMS > 0 && (micros() - m_dateDerniereDecrementation) >= 1000){
-        m_dureeActionMS --;
-        m_dateDerniereDecrementation += 1000;
-    }
+    while (m_dureeActionMS > 0 && (micros() - m_dateDernierDecrementdureeActionUs) >= 1000) {
+    m_dureeActionMS--;
+    m_dateDernierDecrementdureeActionUs += 1000;
+  }
 
-    if(m_dureeActionMS == 0){
-        switch(m_etatCycle){
-            case 0:
-                eteindre();
-                m_dureeActionMS = m_dureeEteinte;
-                m_etatCycle = 1;
-                break;
-            case 1:
-                allumer();
-                m_dureeActionMS = m_dureeAllumee;
-                m_etatCycle = 0;
-                break;
-        }
+  if (m_dureeActionMS == 0) {
+    switch (m_etapeCycle) {
+      case 0:
+        allumer();
+        m_dureeActionMS = p_allumer;
+        ++m_etapeCycle;
+        break;
+      case 1:
+        eteindre();
+        m_dureeActionMS = p_eteint;
+        m_etapeCycle = 0;
+      default:
+        break;
     }
+  }
 
 };

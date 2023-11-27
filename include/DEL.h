@@ -11,8 +11,8 @@ public:
     void eteindre();
 private:
     uint8_t m_pinDEL;
-    int m_tempsAllumer;
-    int m_tempsEteint;
-    int m_dureeActionMS;
+    int m_etapeCycle;
+    unsigned long m_dureeActionMS;
+    uint32_t m_dateDernierDecrementdureeActionUs;
     int m_poucentageIntensite;
 };
